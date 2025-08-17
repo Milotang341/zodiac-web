@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星座观察</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: black;
+            overflow: hidden;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .star-info {
+            margin-top: 30px;
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .star-info:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .zodiac-img {
+            margin-top: 20px;
+            width: 100px;
+            height: 100px;
+        }
+
+        /* 星空背景动画 */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.2; transform: scale(0.5); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>星座观察网页</h1>
+
+    <label for="zodiac">请选择你的星座：</label>
+    <select id="zodiac">
+        <option value="">--请选择--</option>
+        <option value="aries">白羊座</option>
+        <option value="taurus">金牛座</option>
+        <option value="gemini">双子座</option>
+        <option value="cancer">巨蟹座</option>
+        <option value="leo">狮子座</option>
+        <option value="virgo">处女座</option>
+        <option value="libra">天秤座</option>
+        <option value="scorpio">天蝎座</option>
+        <option value="sagittarius">射手座</option>
+        <option value="capricorn">摩羯座</option>
+        <option value="aquarius">水瓶座</option>
+        <option value="pisces">双鱼座</option>
+    </select>
+
+    <div class="star-info" id="starInfo">
+        请选择一个星座查看信息。
+    </div>
+    <img id="zodiacImg" class="zodiac-img" src="" alt="" style="display:none;">
+
+    <script>
+        // 星空生成
+        const starCount = 100;
+        for(let i=0; i<starCount; i++){
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = star.style.height = Math.random()*3 + 1 + 'px';
+            star.style.top = Math.random()*window.innerHeight + 'px';
+            star.style.left = Math.random()*window.innerWidth + 'px';
+            star.style.animationDuration = 1 + Math.random()*3 + 's';
+            document.body.appendChild(star);
+        }
+
+        const zodiacInfo = {
+            aries: {text:"白羊座：热情开朗，喜欢冒险。", img:"https://upload.wikimedia.org/wikipedia/commons/5/5a/Aries.svg"},
+            taurus: {text:"金牛座：稳重踏实，重视安全感。", img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Taurus.svg"},
+            gemini: {text:"双子座：机智灵活，善于沟通。", img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Gemini.svg"},
+            cancer: {text:"巨蟹座：温柔体贴，情感丰富。", img:"https://upload.wikimedia.org/wikipedia/commons/2/2d/Cancer.svg"},
+            leo: {text:"狮子座：自信勇敢，领导力强。", img:"https://upload.wikimedia.org/wikipedia/commons/1/1b/Leo.svg"},
+            virgo: {text:"处女座：细心谨慎，追求完美。", img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Virgo.svg"},
+            libra: {text:"天秤座：优雅平衡，讲求和谐。", img:"https://upload.wikimedia.org/wikipedia/commons/f/f7/Libra.svg"},
+            scorpio: {text:"天蝎座：神秘坚定，意志力强。", img:"https://upload.wikimedia.org/wikipedia/commons/2/2d/Scorpius.svg"},
+            sagittarius: {text:"射手座：乐观自由，喜欢冒险。", img:"https://upload.wikimedia.org/wikipedia/commons/4/4f/Sagittarius.svg"},
+            capricorn: {text:"摩羯座：勤奋务实，有责任感。", img:"https://upload.wikimedia.org/wikipedia/commons/7/76/Capricorn.svg"},
+            aquarius: {text:"水瓶座：创新独立，思想开放。", img:"https://upload.wikimedia.org/wikipedia/commons/2/24/Aquarius.svg"},
+            pisces: {text:"双鱼座：温柔浪漫，富有想象力。", img:"https://upload.wikimedia.org/wikipedia/commons/8/82/Pisces.svg"}
+        };
+
+        const select = document.getElementById("zodiac");
+        const infoDiv = document.getElementById("starInfo");
+        const imgDiv = document.getElementById("zodiacImg");
+
+        select.addEventListener("change", function(){
+            const value = this.value;
+            if(value && zodiacInfo[value]){
+                infoDiv.textContent = zodiacInfo[value].text;
+                imgDiv.src = zodiacInfo[value].img;
+                imgDiv.style.display = "inline-block";
+            } else {
+                infoDiv.textContent = "请选择一个星座查看信息。";
+                imgDiv.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+</html>
